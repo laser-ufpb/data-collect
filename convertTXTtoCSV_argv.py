@@ -4,7 +4,9 @@ import matplotlib.cbook as cbook
 import numpy
 import sys
 
-## x.txt y.txt z.txt resultfile.csv
+############ READ ME ####################
+# Format : x.txt    y.txt   z.txt    resultfile.csv
+#########################################
 
 file1 = sys.argv[1]
 file2 = sys.argv[2]
