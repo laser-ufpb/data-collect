@@ -6,6 +6,9 @@ import matplotlib.patches as mpatches
 
 from scipy.signal import find_peaks
 
+########READ ME ###########
+#Format : testfly_data.csv 		fx.x.x 		N
+#########################
 
 def sac_dm(data, N, menorTam):
 	M = menorTam
@@ -34,24 +37,21 @@ def plot_x (sec_value):
 # print(data)
 # plt.plot(data['x'], data['y'], data['z'])
 
-#DateinnameGut f1.2.1 2000
 test_fly_name = sys.argv[1]
 failure_data_name = sys.argv[2]
 #N = 2000
 N = int(sys.argv[3])
 
 
-#TODO: exception when no argv or wrong
+
 if len(failure_data_name) == 6: 
 	pass
 else: 
 	#TODO: exception
-	print("wrong format: try fx.x.x \n")
-	print("look at data_csv/simulated_failure_data , you will find the possible files but use the format: example test_fly_data_name f1.1.1 N_number")
+	print("wrong format: try fx.x.x")
 
 
-
-with open('data_csv/test_fly_data/'+ test_fly_name, 'rb') as f:
+with open('data_csv/test_fly_data/orginal/'+ test_fly_name, 'rb') as f:
 #with open('data-theo-tello-1-incompleto.csv', 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
     normal_data = np.genfromtxt(clean_lines,skip_header=1, delimiter=',',names=["x", "y", "z"])
@@ -166,6 +166,3 @@ print("#############################")
 
 
 plt.show()
-
-
-
