@@ -35,7 +35,8 @@ def plot_x (sec_value):
 	return x1
 
 
-cut_or_orginal= "cut_version"  #file directory 
+cut_or_orginal= "data_x_y_z/cut_version"  #file directory 
+#cut_or_orginal= "data_x_y_z/orginal"  #file directory 
 test_fly_name = sys.argv[1]
 failure_data_name = sys.argv[2]
 N = int(sys.argv[3])

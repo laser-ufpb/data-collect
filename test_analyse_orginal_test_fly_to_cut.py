@@ -30,8 +30,8 @@ def sac_dm(data, N, menorTam):
 	return sacdm
 
 test_fly_name = sys.argv[1]
-cut_or_orginal= "cut_version"  #file directory 
-#cut_or_orginal= "orginal"  #file directory 
+cut_or_orginal= "data_x_y_z/cut_version"  #file directory 
+#cut_or_orginal= "data_x_y_z/orginal"  #file directory 
 
 
 with open('data_csv/test_fly_data/'+cut_or_orginal+'/'+ test_fly_name, 'rb') as f:
