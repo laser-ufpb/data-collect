@@ -6,8 +6,10 @@ import matplotlib.patches as mpatches
 
 from scipy.signal import find_peaks
 
-########READ ME ###########
+######## READ ME ###########
 #Format : testfly_data.csv 		fx.x.x 		N
+#
+#the files are in folder test_fly_data and can be changed with the variable "cut_or_orginal"
 #########################
 
 def sac_dm(data, N, menorTam):
@@ -32,14 +34,10 @@ def plot_x (sec_value):
 	x1 = x1 * N
 	return x1
 
-#When the csv file have a , between the rows 3D and " "
-# data = np.genfromtxt("test3D.csv", delimiter=[",", "."], names=["x", "y", "z"])
-# print(data)
-# plt.plot(data['x'], data['y'], data['z'])
 
+cut_or_orginal= "cut_version"  #file directory 
 test_fly_name = sys.argv[1]
 failure_data_name = sys.argv[2]
-#N = 2000
 N = int(sys.argv[3])
 
 
@@ -51,11 +49,9 @@ else:
 	print("wrong format: try fx.x.x")
 
 
-with open('data_csv/test_fly_data/orginal/'+ test_fly_name, 'rb') as f:
-#with open('data-theo-tello-1-incompleto.csv', 'rb') as f:
+with open('data_csv/test_fly_data/' +cut_or_orginal+'/'+ test_fly_name, 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
     normal_data = np.genfromtxt(clean_lines,skip_header=1, delimiter=',',names=["x", "y", "z"])
-
 
 v_number = failure_data_name[3]
 n_number = failure_data_name[5]
@@ -63,20 +59,10 @@ n_number = failure_data_name[5]
 failure_file_name= str('data_csv/simulated_failure_data/'+failure_data_name[0:2]+'_v'+v_number+'_n'+n_number+'.csv')
 print(failure_data_name[0:2]+'_v'+v_number+'_n'+n_number+'.csv')
 
-#ugfzbfile = str('data/'+failure_data_name+'/'+'voo'+v_number+'/'+'n'+n_number+'/'+"f1_v1_n1"+'.csv')
-#print("\n",ugfzbfile)
-
 with open(failure_file_name, 'rb') as f:
-#with open('data/Failure1/voo1/n2/f_n1_2.csv', 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
     failure_data = np.genfromtxt(clean_lines,skip_header=0, delimiter=',',names=["x", "y", "z"])
 
-# failure_data = np.genfromtxt('data/Failure1/voo1/n1/z.txt', delimiter='\n', names=['z'])
-# print(failure_data)
-#print(data)
-#plt.plot(data['x'], data['y'], data['z'])
-#print(len(data))
-#print(len(failure_data))
 
 if (len(normal_data['x']) < len(failure_data['x']) ):
 
@@ -89,14 +75,6 @@ else:
 	menorTam = len(failure_data)
 	diffrent =  len(normal_data['x'])-len(failure_data['x']) 
 	normal_data = normal_data[:-diffrent]
-
-
-# print(menorTam)
-# test = failure_data['y'] 
-# print(test)
-# for i in range(menorTam -1):
-#     test[i] = test[i+1] + test[i]
-# print(test)
 
 
 sac_x_good = sac_dm(normal_data['x'], N, menorTam)
