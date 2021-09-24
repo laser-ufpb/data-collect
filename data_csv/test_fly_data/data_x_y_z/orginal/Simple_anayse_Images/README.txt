@@ -8,3 +8,4 @@ Better data are in << cut_version >> or << with_timestamp>> folder
 
 
 This file added from: Nico on : 24.09.2021
+Pictures are create with file < anaylse_data_x_y_z.py > 
