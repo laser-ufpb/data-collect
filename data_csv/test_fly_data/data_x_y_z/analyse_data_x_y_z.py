@@ -7,7 +7,9 @@ from scipy.signal import find_peaks
 
 ######## READ ME ###########
 #Format : testfly_data.csv 
-#the files are in folder << test_fly_data >> and can be changed with the variable "cut_or_orginal" line 31/32
+#be sure you are in the right folder to run << data/csv/test_fly_data/data_x_y_z >>
+#the testfly_data files are in folder << test_fly_data/data_x_y_z >> and can be changed with the variable "cut_or_orginal" line 33/34
+#EX:d:/LASER/.venv/Scripts/python.exe analyse_data_x_y_z.py data-alexandre-grande-1.csv f1.1.1 500
 #########################
 
 def sac_dm(data, N, menorTam):
@@ -27,12 +29,11 @@ def sac_dm(data, N, menorTam):
 
 	return sacdm
 
-test_fly_name = sys.argv[1]
+test_fly_name = sys.argv[1] # -> find name under  ..\data-collect\data_csv\test_fly_data\data_x_y_z\cut_version||orginal 
 cut_or_orginal= "cut_version/"  #file directory 
 #cut_or_orginal= "orginal/"  #file directory 
 
 with open(cut_or_orginal + test_fly_name, 'rb') as f:
-#with open('data_csv/test_fly_data/data_x_y_z/'+cut_or_orginal+'/'+ test_fly_name, 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
     normal_data = np.genfromtxt(clean_lines,skip_header=1, delimiter=',',names=["x", "y", "z"])
 
@@ -44,13 +45,13 @@ fig.set_size_inches(10, 6, forward=True)
 fig.suptitle(test_fly_name , fontsize=12)
 
 
-ax[0].plot(normal_data['x'],color='r', label='Signal x')
+ax[0].plot(normal_data['x'], color='r', label='Signal x')
 ax[0].set_title('Signal x')
 
-ax[1].plot(normal_data['y'],color='r', label='Signal y')
+ax[1].plot(normal_data['y'], color='r', label='Signal y')
 ax[1].set_title('Signal y')
 
-ax[2].plot(normal_data['z'],color='r', label='Signal z')
+ax[2].plot(normal_data['z'], color='r', label='Signal z')
 ax[2].set_title('Signal z')
 
 
