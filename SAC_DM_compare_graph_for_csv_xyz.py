@@ -8,9 +8,8 @@ from scipy.signal import find_peaks
 
 ######## READ ME ###########
 #Format : testfly_data.csv 		fx.x.x 		N
-#
-#the files are in folder test_fly_data and can be changed with the variable "cut_or_orginal"
-#########################
+#the testfly_data files are in folder << test_fly_data/data_x_y_z >> and can be changed with the variable "cut_or_orginal" line 37/38
+##########################
 
 def sac_dm(data, N, menorTam):
 	M = menorTam
@@ -37,22 +36,20 @@ def plot_x (sec_value):
 
 cut_or_orginal= "data_x_y_z/cut_version"  #file directory 
 #cut_or_orginal= "data_x_y_z/orginal"  #file directory 
-test_fly_name = sys.argv[1]
-failure_data_name = sys.argv[2]
-N = int(sys.argv[3])
-
-
+test_fly_name = sys.argv[1] # -> find name under  ..\data-collect\data_csv\test_fly_data\data_x_y_z\cut_version||orginal 
+failure_data_name = sys.argv[2] # -> find name under ..\data-collect\data_csv\simulated_failure_data format fx.x.x
+N = int(sys.argv[3]) # -> number of messurevalue interval 
 
 if len(failure_data_name) == 6: 
 	pass
 else: 
 	#TODO: exception
-	print("wrong format: try fx.x.x")
+	print("maybe wrong format: try fx.x.x")
 
 
 with open('data_csv/test_fly_data/' +cut_or_orginal+'/'+ test_fly_name, 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
-    normal_data = np.genfromtxt(clean_lines,skip_header=1, delimiter=',',names=["x", "y", "z"])
+    normal_data = np.genfromtxt(clean_lines,skip_header=1, delimiter=',', names=["x", "y", "z"])
 
 v_number = failure_data_name[3]
 n_number = failure_data_name[5]
@@ -62,19 +59,17 @@ print(failure_data_name[0:2]+'_v'+v_number+'_n'+n_number+'.csv')
 
 with open(failure_file_name, 'rb') as f:
     clean_lines = (line.replace(b'\"',b'') for line in f)
-    failure_data = np.genfromtxt(clean_lines,skip_header=0, delimiter=',',names=["x", "y", "z"])
+    failure_data = np.genfromtxt(clean_lines,skip_header=0, delimiter=',', names=["x", "y", "z"])
 
 
 if (len(normal_data['x']) < len(failure_data['x']) ):
-
 	menorTam = len(normal_data)
-	diffrent =  len(failure_data['x'])-len(normal_data['x']) 
+	diffrent =  len(failure_data['x']) - len(normal_data['x']) 
 	failure_data = failure_data[:-diffrent]
 	
 else:
-
 	menorTam = len(failure_data)
-	diffrent =  len(normal_data['x'])-len(failure_data['x']) 
+	diffrent =  len(normal_data['x']) - len(failure_data['x']) 
 	normal_data = normal_data[:-diffrent]
 
 
@@ -94,18 +89,16 @@ fig.suptitle(test_fly_name + ' compare with ' + failure_data_name, fontsize=12)
 
 
 #ValueError: x and y must have same first dimension, but have shapes (1,) and (75195,)
-ax[0,0].plot(normal_data['x'],color='r', label='Signal x')
-ax[0,0].plot(failure_data['x'],color='b', label='Failure x')
+ax[0,0].plot(normal_data['x'], color='r', label='Signal x')
+ax[0,0].plot(failure_data['x'], color='b', label='Failure x')
 ax[0,0].set_title('Signal x')
 
-ax[1,0].plot(normal_data['y'],color='r', label='Signal y')
-ax[1,0].plot(failure_data['y'],color='b', label='Failure y')
+ax[1,0].plot(normal_data['y'], color='r', label='Signal y')
+ax[1,0].plot(failure_data['y'], color='b', label='Failure y')
 ax[1,0].set_title('Signal y')
-# ax2.set_xlabel('x')
-# ax2.set_ylabel('y')
 
-ax[2,0].plot(normal_data['z'],color='r', label='Signal z')
-ax[2,0].plot(failure_data['z'],color='b', label='Failure z')
+ax[2,0].plot(normal_data['z'], color='r', label='Signal z')
+ax[2,0].plot(failure_data['z'], color='b', label='Failure z')
 ax[2,0].set_title('Signal z')
 
 ax[0,1].plot(plot_x(sac_x_good), sac_x_good, color='r', label='Good data')
@@ -131,7 +124,7 @@ print(N_string)
 red_patch = mpatches.Patch(color='red', label= 'Good data')
 blue_patch = mpatches.Patch(color='blue', label= 'Failure data')
 n_patch = mpatches.Circle(3, label= N_string)
-legend = fig.legend(handles=[red_patch,blue_patch, n_patch], loc='upper right',bbox_to_anchor=(1.0, 1.0))
+legend = fig.legend(handles=[red_patch,blue_patch, n_patch], loc='upper right', bbox_to_anchor=(1.0, 1.0))
 #legend = fig.legend(['Sinal Normal', 'Sinal com Falhas', N_string], loc='upper right',bbox_to_anchor=(1.0, 1.0))
 # Put a nicer background color on the legend.
 legend.get_frame().set_facecolor('C0')
